@@ -5,6 +5,6 @@ import ru.dimakron.paging.ui.MainPresenter
 
 val presenterModule = module {
 
-    factory { MainPresenter() }
+    factory { MainPresenter(get()) }
 
 }

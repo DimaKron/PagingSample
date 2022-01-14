@@ -1,9 +1,12 @@
 package ru.dimakron.paging.ui
 
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import moxy.MvpPresenter
+import ru.dimakron.paging.data.DigitsRepository
+import ru.dimakron.paging.putIn
 
-class MainPresenter: MvpPresenter<IMainActivity>() {
+class MainPresenter(private val digitsRepository: DigitsRepository): MvpPresenter<IMainActivity>() {
 
     private val disposables = CompositeDisposable()
 
@@ -12,7 +15,10 @@ class MainPresenter: MvpPresenter<IMainActivity>() {
     }
 
     private fun loadDigits(){
-        viewState.showDigits(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
+        digitsRepository.getDigits(0, 30)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(viewState::showDigits)
+            .putIn(disposables)
     }
 
     override fun onDestroy() {

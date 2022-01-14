@@ -10,6 +10,7 @@ class MainPresenter(private val digitsRepository: DigitsRepository): MvpPresente
 
     private val pagingFlowable = Pager(PagingConfig(10), pagingSourceFactory = { digitsRepository.createPagingSource() })
         .flowable
+        //.cachedIn(viewModelScope) TODO Не получается кешировать прогресс пагинации
 
     override fun onFirstViewAttach() {
         viewState.initDigitsPaging(pagingFlowable)

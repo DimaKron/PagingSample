@@ -1,10 +1,13 @@
 package ru.dimakron.paging.di
 
 import org.koin.dsl.module
+import ru.dimakron.paging.data.ApiService
 import ru.dimakron.paging.data.DigitsRepository
 
-val repositoryModule = module {
+val dataModule = module {
 
-    single { DigitsRepository() }
+    single { ApiService() }
+
+    single { DigitsRepository(get()) }
 
 }

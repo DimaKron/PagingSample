@@ -1,9 +1,11 @@
 package ru.dimakron.paging.ui
 
+import androidx.paging.PagingData
+import io.reactivex.Flowable
 import moxy.MvpView
 
 interface IMainActivity: MvpView {
 
-    fun showDigits(items: List<Int>)
+    fun initDigitsPaging(flowable: Flowable<PagingData<Int>>)
 
 }

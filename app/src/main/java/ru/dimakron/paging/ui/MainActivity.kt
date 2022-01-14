@@ -1,7 +1,10 @@
 package ru.dimakron.paging.ui
 
 import android.os.Bundle
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.Flowable
+import io.reactivex.disposables.Disposable
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import org.koin.android.ext.android.get
@@ -15,6 +18,8 @@ class MainActivity: MvpAppCompatActivity(), IMainActivity {
 
     private var adapter: DigitsAdapter? = null
 
+    private var pagingDisposable: Disposable? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,11 +31,15 @@ class MainActivity: MvpAppCompatActivity(), IMainActivity {
     }
 
     override fun onDestroy() {
+        pagingDisposable?.dispose()
+        pagingDisposable = null
         adapter = null
         super.onDestroy()
     }
 
-    override fun showDigits(items: List<Int>) {
-        adapter?.items = items
+    override fun initDigitsPaging(flowable: Flowable<PagingData<Int>>) {
+        if (pagingDisposable == null) {
+            pagingDisposable = flowable.subscribe { adapter?.submitData(lifecycle, it) }
+        }
     }
 }

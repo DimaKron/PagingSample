@@ -1,4 +1,4 @@
-package ru.dimakron.paging.ui
+package ru.dimakron.paging.ui.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import ru.dimakron.paging.databinding.ItemDigitBinding
 class DigitHolder private constructor(private val binding: ItemDigitBinding): RecyclerView.ViewHolder(binding.root) {
 
     companion object{
-        fun create(parent: ViewGroup): DigitHolder{
+        fun create(parent: ViewGroup): DigitHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ItemDigitBinding.inflate(layoutInflater, parent, false)
             return DigitHolder(binding)

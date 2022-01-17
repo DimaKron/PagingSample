@@ -3,7 +3,7 @@ package ru.dimakron.paging.ui.paging3
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import ru.dimakron.paging.ui.DigitHolder
+import ru.dimakron.paging.ui.common.DigitHolder
 
 class DigitsAdapter: PagingDataAdapter<Int, DigitHolder>(diffCallback) {
 

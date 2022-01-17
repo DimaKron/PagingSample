@@ -2,7 +2,7 @@ package ru.dimakron.paging.ui.paginate
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.dimakron.paging.ui.DigitHolder
+import ru.dimakron.paging.ui.common.DigitHolder
 
 class DigitsAdapter: RecyclerView.Adapter<DigitHolder>() {
 

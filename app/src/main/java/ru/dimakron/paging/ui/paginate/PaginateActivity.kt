@@ -25,7 +25,6 @@ class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
 
     private var adapter: DigitsAdapter? = null
     private var paginate: Paginate? = null
-
     private var isItemsLoading = false
     private var hasMoreItems = true
 

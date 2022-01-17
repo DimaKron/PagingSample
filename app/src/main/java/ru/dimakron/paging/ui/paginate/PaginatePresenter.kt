@@ -5,6 +5,7 @@ import ru.dimakron.paging.data.DigitsRepository
 
 class PaginatePresenter(private val digitsRepository: DigitsRepository): MvpPresenter<IPaginateActivity>() {
 
+    fun processLoadMore(){
 
-
+    }
 }

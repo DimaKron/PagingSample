@@ -13,7 +13,6 @@ import org.koin.android.ext.android.get
 import ru.dimakron.paging.databinding.ActivityPaging3Binding
 
 
-// https://github.com/MarkoMilos/Paginate TODO
 class Paging3Activity: MvpAppCompatActivity(), IPaging3Activity {
 
     companion object{

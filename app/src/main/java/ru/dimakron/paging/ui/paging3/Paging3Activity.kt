@@ -1,5 +1,7 @@
-package ru.dimakron.paging.ui
+package ru.dimakron.paging.ui.paging3
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,13 +10,20 @@ import io.reactivex.disposables.Disposable
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import org.koin.android.ext.android.get
-import ru.dimakron.paging.databinding.ActivityMainBinding
+import ru.dimakron.paging.databinding.ActivityPaging3Binding
 
-class MainActivity: MvpAppCompatActivity(), IMainActivity {
 
-    private val presenter by moxyPresenter { get<MainPresenter>() }
+// https://github.com/MarkoMilos/Paginate TODO
+class Paging3Activity: MvpAppCompatActivity(), IPaging3Activity {
 
-    private lateinit var binding: ActivityMainBinding
+    companion object{
+        fun makeIntent(context: Context) =
+            Intent(context, Paging3Activity::class.java)
+    }
+
+    private val presenter by moxyPresenter { get<Paging3Presenter>() }
+
+    private lateinit var binding: ActivityPaging3Binding
 
     private var adapter: DigitsAdapter? = null
 
@@ -22,7 +31,7 @@ class MainActivity: MvpAppCompatActivity(), IMainActivity {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityPaging3Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
         adapter = DigitsAdapter()

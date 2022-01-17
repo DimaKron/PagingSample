@@ -12,13 +12,21 @@
         android:theme="@style/Theme.PagingSample">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.paging3.Paging3Activity"
+            android:label="@string/paging3" />
+
+        <activity
+            android:name=".ui.paginate.PaginateActivity"
+            android:label="@string/paginate" />
 
     </application>
 

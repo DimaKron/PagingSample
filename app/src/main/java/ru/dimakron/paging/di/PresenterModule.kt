@@ -1,10 +1,12 @@
 package ru.dimakron.paging.di
 
 import org.koin.dsl.module
-import ru.dimakron.paging.ui.MainPresenter
+import ru.dimakron.paging.ui.paginate.PaginatePresenter
+import ru.dimakron.paging.ui.paging3.Paging3Presenter
 
 val presenterModule = module {
 
-    factory { MainPresenter(get()) }
+    factory { Paging3Presenter(get()) }
+    factory { PaginatePresenter(get()) }
 
 }

@@ -3,6 +3,7 @@ package ru.dimakron.paging.data
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import io.reactivex.Single
+import ru.dimakron.paging.model.Digits
 
 class DigitsPagingSource(private val apiService: ApiService): RxPagingSource<Int, Int>() {
 
@@ -13,7 +14,7 @@ class DigitsPagingSource(private val apiService: ApiService): RxPagingSource<Int
             .map { it.toLoadResult() }
             .onErrorReturn { LoadResult.Error(it) }
 
-    private fun List<Int>.toLoadResult(): LoadResult<Int, Int> =
-        LoadResult.Page(this, null, this.lastOrNull(), LoadResult.Page.COUNT_UNDEFINED, LoadResult.Page.COUNT_UNDEFINED)
+    private fun Digits.toLoadResult(): LoadResult<Int, Int> =
+        LoadResult.Page(items, null, if (hasMore) items.lastOrNull() else null, LoadResult.Page.COUNT_UNDEFINED, LoadResult.Page.COUNT_UNDEFINED)
 
 }

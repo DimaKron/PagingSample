@@ -9,6 +9,7 @@ import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import org.koin.android.ext.android.get
 import ru.dimakron.paging.databinding.ActivityPaginateBinding
+import ru.dimakron.paging.model.LoadingState
 
 class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
 
@@ -23,6 +24,9 @@ class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
     private lateinit var binding: ActivityPaginateBinding
 
     private var adapter: DigitsAdapter? = null
+
+    private var isItemsLoading = false
+    private var hasMoreItems = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,18 +47,24 @@ class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
         super.onDestroy()
     }
 
+    override fun showLoadingState(loadingState: LoadingState) {
+        isItemsLoading = loadingState == LoadingState.LOADING
+    }
+
+    override fun showDigits(items: List<Int>, hasMore: Boolean) {
+        adapter?.items = items
+        hasMoreItems = hasMore
+    }
+
     private val paginateCallbacks = object: Paginate.Callbacks {
 
         override fun onLoadMore() {
             presenter.processLoadMore()
         }
 
-        override fun isLoading(): Boolean {
-            return false
-        }
+        override fun isLoading() = isItemsLoading
 
-        override fun hasLoadedAllItems(): Boolean {
-            return true
-        }
+        override fun hasLoadedAllItems() = !hasMoreItems
+
     }
 }

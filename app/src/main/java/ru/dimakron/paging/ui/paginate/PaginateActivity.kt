@@ -24,6 +24,7 @@ class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
     private lateinit var binding: ActivityPaginateBinding
 
     private var adapter: DigitsAdapter? = null
+    private var paginate: Paginate? = null
 
     private var isItemsLoading = false
     private var hasMoreItems = true
@@ -36,13 +37,15 @@ class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
         adapter = DigitsAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        Paginate.with(binding.recyclerView, paginateCallbacks)
+        paginate = Paginate.with(binding.recyclerView, paginateCallbacks)
             .setLoadingTriggerThreshold(1)
             .addLoadingListItem(true)
             .build()
     }
 
     override fun onDestroy() {
+        paginate?.unbind()
+        paginate = null
         adapter = null
         super.onDestroy()
     }
@@ -54,6 +57,7 @@ class PaginateActivity: MvpAppCompatActivity(), IPaginateActivity {
     override fun showDigits(items: List<Int>, hasMore: Boolean) {
         adapter?.items = items
         hasMoreItems = hasMore
+        paginate?.setHasMoreDataToLoad(hasMore)
     }
 
     private val paginateCallbacks = object: Paginate.Callbacks {

@@ -25,8 +25,6 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
 
     private var adapter: DigitsAdapter? = null
     private var pages: Pages? = null
-    private var isItemsLoading = false
-    private var hasMoreItems = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +47,12 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
     }
 
     override fun showLoadingState(loadingState: LoadingState) {
-        isItemsLoading = loadingState == LoadingState.LOADING
+        pages?.isLoading = loadingState == LoadingState.LOADING
     }
 
     override fun showDigits(items: List<Int>, hasMore: Boolean) {
         adapter?.items = items
-        hasMoreItems = hasMore
+        pages?.hasMore = hasMore
     }
 
     private val paginateCallbacks = object: Pages.Callbacks {
@@ -62,10 +60,5 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
         override fun onLoadMore() {
             presenter.processLoadMore()
         }
-
-        override fun isLoading() = isItemsLoading
-
-        override fun hasLoadedAllItems() = !hasMoreItems
-
     }
 }

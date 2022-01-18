@@ -8,6 +8,9 @@ class Pages private constructor(private val recyclerView: RecyclerView,
                                 private val callbacks: Callbacks,
                                 private val loadingTriggerThreshold: Int){
 
+    var isLoading = false
+    var hasMore = true
+
     private val onScrollListener = object: RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             checkEndOffset()
@@ -45,7 +48,7 @@ class Pages private constructor(private val recyclerView: RecyclerView,
         val totalItemCount = layoutManager.itemCount
 
         if ((totalItemCount - visibleItemCount) <= (firstVisibleItemPosition + loadingTriggerThreshold) || totalItemCount == 0) {
-            if (!callbacks.isLoading() && !callbacks.hasLoadedAllItems()) {
+            if (!isLoading && hasMore) {
                 callbacks.onLoadMore()
             }
         }
@@ -77,10 +80,6 @@ class Pages private constructor(private val recyclerView: RecyclerView,
     interface Callbacks {
 
         fun onLoadMore()
-
-        fun isLoading(): Boolean
-
-        fun hasLoadedAllItems(): Boolean
 
     }
 }

@@ -28,6 +28,10 @@
             android:name=".ui.paginate.PaginateActivity"
             android:label="@string/paginate" />
 
+        <activity
+            android:name=".ui.pages.PagesActivity"
+            android:label="@string/pages" />
+
     </application>
 
 </manifest>

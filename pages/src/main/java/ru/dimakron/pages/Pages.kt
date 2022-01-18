@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 class Pages private constructor(private val recyclerView: RecyclerView,
-                                private val callbacks: Callbacks,
+                                private val onLoadMore: () -> Unit,
                                 private val loadingTriggerThreshold: Int){
 
     var isLoading = false
@@ -19,7 +19,6 @@ class Pages private constructor(private val recyclerView: RecyclerView,
 
     init {
         recyclerView.addOnScrollListener(onScrollListener)
-
         checkEndOffset()
     }
 
@@ -29,8 +28,6 @@ class Pages private constructor(private val recyclerView: RecyclerView,
 
     private fun checkEndOffset() {
         val layoutManager = recyclerView.layoutManager
-
-        val visibleItemCount = recyclerView.childCount
 
         val firstVisibleItemPosition = when(layoutManager){
             is LinearLayoutManager -> {
@@ -45,17 +42,18 @@ class Pages private constructor(private val recyclerView: RecyclerView,
             }
         }
 
+        val visibleItemCount = recyclerView.childCount
         val totalItemCount = layoutManager.itemCount
 
         if ((totalItemCount - visibleItemCount) <= (firstVisibleItemPosition + loadingTriggerThreshold) || totalItemCount == 0) {
             if (!isLoading && hasMore) {
-                callbacks.onLoadMore()
+                onLoadMore()
             }
         }
     }
 
     class Builder(private val recyclerView: RecyclerView,
-                  private val callbacks: Callbacks){
+                  private val onLoadMore: () -> Unit){
 
         private var loadingTriggerThreshold = 5
 
@@ -73,13 +71,7 @@ class Pages private constructor(private val recyclerView: RecyclerView,
                 throw IllegalStateException("LayoutManager needs to be set on the RecyclerView")
             }
 
-            return Pages(recyclerView, callbacks, loadingTriggerThreshold)
+            return Pages(recyclerView, onLoadMore, loadingTriggerThreshold)
         }
-    }
-
-    interface Callbacks {
-
-        fun onLoadMore()
-
     }
 }

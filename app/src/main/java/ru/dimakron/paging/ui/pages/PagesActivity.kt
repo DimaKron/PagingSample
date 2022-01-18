@@ -34,7 +34,7 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
         adapter = DigitsAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        pages = Pages.Builder(binding.recyclerView, paginateCallbacks)
+        pages = Pages.Builder(binding.recyclerView, presenter::processLoadMore)
             .setLoadingTriggerThreshold(1)
             .build()
     }
@@ -53,12 +53,5 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
     override fun showDigits(items: List<Int>, hasMore: Boolean) {
         adapter?.items = items
         pages?.hasMore = hasMore
-    }
-
-    private val paginateCallbacks = object: Pages.Callbacks {
-
-        override fun onLoadMore() {
-            presenter.processLoadMore()
-        }
     }
 }

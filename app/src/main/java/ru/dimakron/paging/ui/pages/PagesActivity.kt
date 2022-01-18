@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import org.koin.android.ext.android.get
-import ru.dimakron.pages.RecyclerPaginate
+import ru.dimakron.pages.Pages
 import ru.dimakron.paging.databinding.ActivityPagesBinding
 import ru.dimakron.paging.model.LoadingState
 
@@ -24,7 +24,7 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
     private lateinit var binding: ActivityPagesBinding
 
     private var adapter: DigitsAdapter? = null
-    private var paginate: RecyclerPaginate? = null
+    private var pages: Pages? = null
     private var isItemsLoading = false
     private var hasMoreItems = true
 
@@ -36,14 +36,14 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
         adapter = DigitsAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        paginate = RecyclerPaginate.Builder(binding.recyclerView, paginateCallbacks)
+        pages = Pages.Builder(binding.recyclerView, paginateCallbacks)
             .setLoadingTriggerThreshold(1)
             .build()
     }
 
     override fun onDestroy() {
-        paginate?.unbind()
-        paginate = null
+        pages?.unbind()
+        pages = null
         adapter = null
         super.onDestroy()
     }
@@ -57,7 +57,7 @@ class PagesActivity: MvpAppCompatActivity(), IPagesActivity {
         hasMoreItems = hasMore
     }
 
-    private val paginateCallbacks = object: RecyclerPaginate.Callbacks {
+    private val paginateCallbacks = object: Pages.Callbacks {
 
         override fun onLoadMore() {
             presenter.processLoadMore()
